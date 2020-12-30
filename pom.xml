@@ -48,4 +48,15 @@
 
     </dependencies>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexusdeploymentrepo</id>
+            <url>http://taigamc.pl:8081/repo/repository/maven-snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexusdeploymentrepo</id>
+            <url>http://taigamc.pl:8081/repo/repository/maven-releases/</url>
+        </repository>
+    </distributionManagement>
+
 </project>

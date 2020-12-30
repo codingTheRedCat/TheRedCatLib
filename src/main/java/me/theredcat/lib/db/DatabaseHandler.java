@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.function.Consumer;
 
 public abstract class DatabaseHandler {
 
@@ -51,14 +50,36 @@ public abstract class DatabaseHandler {
         return resultCode;
     }
 
-    public void execute(String sql, Consumer<ResultSet> resultSetOperations) throws SQLException {
+    public void execute(String sql, ResultSetOperation resultSetOperations) throws SQLException {
         Statement statement = getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
 
-        resultSetOperations.accept(resultSet);
-
-        resultSet.close();
-        statement.close();
+        try {
+            resultSetOperations.doOperation(resultSet);
+        } finally {
+            resultSet.close();
+            statement.close();
+        }
     }
+
+    public void executeRequireNotEmpty(String sql, ResultSetOperation resultSetOperations) throws SQLException, DatabaseNoRecordsException {
+        Statement statement = getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        if (!resultSet.next()) {
+            resultSet.close();
+            statement.close();
+
+            throw new DatabaseNoRecordsException();
+        }
+
+        try {
+            resultSetOperations.doOperation(resultSet);
+        } finally {
+            resultSet.close();
+            statement.close();
+        }
+    }
+
 
 }
