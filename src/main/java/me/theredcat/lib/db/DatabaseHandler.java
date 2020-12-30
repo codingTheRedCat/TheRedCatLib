@@ -50,19 +50,23 @@ public abstract class DatabaseHandler {
         return resultCode;
     }
 
-    public void execute(String sql, ResultSetOperation resultSetOperations) throws SQLException {
+    public <T> T execute(String sql, ResultSetOperation<T> resultSetOperations) throws SQLException {
         Statement statement = getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
 
+        T result;
+
         try {
-            resultSetOperations.doOperation(resultSet);
+            result = resultSetOperations.doOperation(resultSet);
         } finally {
             resultSet.close();
             statement.close();
         }
+
+        return result;
     }
 
-    public void executeRequireNotEmpty(String sql, ResultSetOperation resultSetOperations) throws SQLException, DatabaseNoRecordsException {
+    public <T> T executeRequireNotEmpty(String sql, ResultSetOperation<T> resultSetOperations) throws SQLException, DatabaseNoRecordsException {
         Statement statement = getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
 
@@ -73,12 +77,16 @@ public abstract class DatabaseHandler {
             throw new DatabaseNoRecordsException();
         }
 
+        T result;
+
         try {
-            resultSetOperations.doOperation(resultSet);
+            result = resultSetOperations.doOperation(resultSet);
         } finally {
             resultSet.close();
             statement.close();
         }
+
+        return result;
     }
 
 

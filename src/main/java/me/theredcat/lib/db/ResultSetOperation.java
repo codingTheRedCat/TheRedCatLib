@@ -3,8 +3,8 @@ package me.theredcat.lib.db;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public interface ResultSetOperation {
+public interface ResultSetOperation<T> {
 
-    void doOperation(ResultSet resultSet) throws SQLException;
+    T doOperation(ResultSet resultSet) throws SQLException;
 
 }
