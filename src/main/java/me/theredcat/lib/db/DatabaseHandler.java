@@ -15,14 +15,12 @@ public abstract class DatabaseHandler {
 
 
     public void connect() throws SQLException {
-        if (connection != null  &&  !(connection.isClosed()))
-            return;
-
-        setupConn();
+        if (connection == null || connection.isClosed())
+            setupConn();
     }
 
     public void disconnect() throws SQLException {
-        if (connection != null  &&  !(connection.isClosed()))
+        if (connection != null && !connection.isClosed())
             connection.close();
     }
 

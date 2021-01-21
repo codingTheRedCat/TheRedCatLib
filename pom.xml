@@ -6,7 +6,19 @@
 
     <groupId>me.theredcat</groupId>
     <artifactId>TheRedCatLib</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.2</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -27,6 +39,7 @@
             <version>1.16-R0.4-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -34,6 +47,7 @@
             <version>1.13-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -51,11 +65,11 @@
     <distributionManagement>
         <snapshotRepository>
             <id>nexusdeploymentrepo</id>
-            <url>http://taigamc.pl:8081/repo/repository/maven-snapshots/</url>
+            <url>http://taigamc.net:8081/repo/repository/maven-snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>nexusdeploymentrepo</id>
-            <url>http://taigamc.pl:8081/repo/repository/maven-releases/</url>
+            <url>http://taigamc.net:8081/repo/repository/maven-releases/</url>
         </repository>
     </distributionManagement>
 

@@ -1,7 +1,5 @@
 package me.theredcat.lib.db;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
@@ -9,36 +7,36 @@ import java.util.Properties;
 
 public class MySQLHandler extends DatabaseHandler {
 
-    private final URL connectionURL;
-
-    private final Properties connectionProperties;
+    private final String connectionURL;
 
     public MySQLHandler(String host, String databaseName, Properties properties){
-        try {
-            connectionURL = new URL("jdbc:mysql://" + host + '/' + databaseName);
-        } catch (MalformedURLException e) {
-            throw new DatabaseSetupException("Can not create URL from given arguments", e);
-        }
+        connectionURL = "jdbc:mysql://" + host + '/' + databaseName;
 
         connectionProperties = properties;
     }
 
-    public MySQLHandler(String host, String databaseName, String user, String password){
-        try {
-            connectionURL = new URL("jdbc:mysql://" + host + '/' + databaseName);
-        } catch (MalformedURLException e) {
-            throw new DatabaseSetupException("Can not create URL from given arguments", e);
-        }
+    public MySQLHandler(String host, String databaseName, String user, String password) {
+        connectionURL = "jdbc:mysql://" + host + '/' + databaseName;
 
         connectionProperties = new Properties();
 
-        connectionProperties.setProperty("user",user);
+        connectionProperties.setProperty("user", user);
         connectionProperties.setProperty("password", password);
+    }
+
+    private final Properties connectionProperties;
+
+    public String getConnectionURL() {
+        return connectionURL;
+    }
+
+    public Properties getConnectionProperties() {
+        return connectionProperties;
     }
 
     @Override
     protected void setupConn() throws SQLException {
-        connection = DriverManager.getConnection(connectionURL.toString(), connectionProperties);
+        connection = DriverManager.getConnection(connectionURL, connectionProperties);
     }
 
     @Override
